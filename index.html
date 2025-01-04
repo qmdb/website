@@ -9,15 +9,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">QMDB.io</div>
             <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#docs">Docs</a>
-                <a href="docs/qmdb.pdf">PDF Guide</a>
+                <a href="docs/qmdb.pdf">Paper</a>
                 <a href="https://github.com/qmdb/qmdb" target="_blank">GitHub</a>
             </div>
             <button class="mobile-menu-btn">☰</button>
@@ -26,15 +25,11 @@
 
     <main>
         <section class="hero">
-            <h1>QMDB.io</h1>
-            <p class="subtitle">A modern database solution</p>
-            <div class="terminal">
-                <pre><code>$ connecting to qmdb...</code></pre>
-            </div>
+            <h1>QMDB</h1>
         </section>
 
         <section class="intro">
-            <!-- This is where we'll render the intro.md content -->
+            <div id="intro-content"></div>
         </section>
     </main>
 
@@ -49,6 +44,16 @@
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
+
+        // Fetch and render the intro.md content
+        fetch('intro.md')
+            .then(response => response.text())
+            .then(markdown => {
+                document.getElementById('intro-content').innerHTML = marked.parse(markdown);
+            })
+            .catch(error => {
+                console.error('Error loading intro.md:', error);
+            });
     </script>
 </body>
 </html> 
